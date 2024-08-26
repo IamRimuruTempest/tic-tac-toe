@@ -15,6 +15,10 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.json("Hello");
+});
+
 //Route to Save Game
 app.post("/api/game", async (request, response) => {
   try {
