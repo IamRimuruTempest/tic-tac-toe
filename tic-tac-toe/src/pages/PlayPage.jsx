@@ -176,19 +176,13 @@ export default function PlayPage() {
 
   useEffect(() => {
     if (winner) {
-      console.log("wiineer", winner);
+      console.log("wiineer", winner, current);
       if (!current) {
-        setPlayerOne((prev) => {
-          const newPlayerOne = { ...prev, win: prev.win + 1 };
-          setPlayerTwo((prev2) => ({ ...prev2, loss: prev2.loss ++ }));
-          return newPlayerOne;
-        });
+        setPlayerOne((prev) => ({ ...prev, win: prev.win + 1 }));
+        setPlayerTwo((prev2) => ({ ...prev2, loss: prev2.loss + 1 }));
       } else {
-        setPlayerTwo((prev) => {
-          const newPlayerTwo = { ...prev, win: prev.win + 1 };
-          setPlayerOne((prev2) => ({ ...prev2, loss: prev2.loss ++ }));
-          return newPlayerTwo;
-        });
+        setPlayerTwo((prev) => ({ ...prev, win: prev.win + 1 }));
+        setPlayerOne((prev2) => ({ ...prev2, loss: prev2.loss + 1 }));
       }
     }
   }, [winner]);
@@ -212,7 +206,7 @@ export default function PlayPage() {
       return newTiles;
     });
 
-    setCurrent(!current);
+    setCurrent((prev) => !prev);
     // setCount((prevCount) => prevCount + 1);
   };
 
