@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 //Route to Save Game
-app.post("/api/game", async (request, response) => {
+app.post("/api/add-game", async (request, response) => {
   try {
     const { winner, rounds, status, playerOne, playerTwo } = request.body;
 

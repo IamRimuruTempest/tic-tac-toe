@@ -8,7 +8,7 @@ export default function MenuPage() {
   const [ongoing, setOngoing] = useState();
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/has-continue")
+      .get("https://tic-tac-toe-api-five.vercel.app/api/has-continue")
       .then((res) => {
         console.log(res.data.data);
         const isOngoing = res.data.data;

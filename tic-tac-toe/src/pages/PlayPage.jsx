@@ -104,7 +104,7 @@ export default function PlayPage() {
     if (!isContinue) {
       console.log("Add new");
       axios
-        .post("http://localhost:5000/api/game", data)
+        .post("https://tic-tac-toe-api-five.vercel.app/api/add-game", data)
         .then(() => {
           setTimeout(() => {
             navigate("/");
@@ -114,7 +114,10 @@ export default function PlayPage() {
     } else {
       console.log("Update");
       axios
-        .post("http://localhost:5000/api/update-game", { ...data, gameid })
+        .post("https://tic-tac-toe-api-five.vercel.app/api/update-game", {
+          ...data,
+          gameid,
+        })
         .then(() => {
           setTimeout(() => {
             navigate("/");
@@ -152,10 +155,10 @@ export default function PlayPage() {
 
   useEffect(() => {
     if (isContinue) {
-      console.log("Hello, World!");
+      // console.log("Hello, World!");
 
       axios
-        .get("http://localhost:5000/api/has-continue")
+        .get("https://tic-tac-toe-api-five.vercel.app/api/has-continue")
         .then((res) => {
           console.log(res.data.data);
           const [ongoing] = res.data.data;
