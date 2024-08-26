@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@font-face {
+  font-family: "Regular";
+  src: local("Super-Mario-Nes"), url('./assets/fonts/Super-Mario-Nes.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "Bold";
+  src: local("SuperMario256"), url('./assets/fonts/SuperMario256.ttf') format("truetype");
+}
+
+
+body {
+  margin: auto;
+  display: flex;
+  place-items: center;
+}
+
