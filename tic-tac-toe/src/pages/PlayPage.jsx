@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "../layout/MainLayout";
 import mushroomGreen from "../assets/images/mushroom-green.png";
@@ -231,8 +232,8 @@ export default function PlayPage() {
           imgsrc={mushroomGreen}
           color="text-green-600"
         />
-        <div className="w-auto flex justify-between flex-col">
-          <h1 className="font-primaryRegular text-center text-sky-600 mb-10">
+        <div className="w-auto flex justify-between flex-col gap-5">
+          <h1 className="font-primaryRegular text-center text-sky-600 ">
             Round {rounds}
           </h1>
 
@@ -246,6 +247,14 @@ export default function PlayPage() {
               />
             ))}
           </div>
+
+          {isContinue ? (
+            <Link to="/" className="nes-btn is-warning font-primaryRegular">
+              Menu
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
 
         {/* Player 2 Status (name, wins, losses and draws) */}

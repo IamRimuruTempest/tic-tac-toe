@@ -26,7 +26,7 @@ export default function HistoryPage() {
     <MainLayout>
       <div className="flex justify-center text-left font-primaryRegular">
         <div className="flex flex-col gap-5">
-          {count > 1 ? (
+          {count > 0 ? (
             <div className="-m-1.5 overflow-x-auto">
               <div className="p-1.5 min-w-full inline-block align-middle">
                 <div className="h-64 scrollbar-hide">
@@ -56,6 +56,12 @@ export default function HistoryPage() {
                           className="px-6 py-3 text-start font-normal"
                         >
                           Score
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-start font-normal"
+                        >
+                          Draw
                         </th>
 
                         <th
