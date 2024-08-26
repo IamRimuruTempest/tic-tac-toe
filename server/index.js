@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://tic-tac-toe-game-puce-two.vercel.app",
     optionsSuccessStatus: 200,
   })
 );
