@@ -102,10 +102,12 @@ mongoose
   .connect(ATLAS_URI)
   .then(() => {
     console.log("App connected to database");
-    app.listen(PORT, () => {
-      console.log(`Server started on port: ${PORT}`);
-    });
+    
   })
   .catch((e) => {
     console.log(e);
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Server started on port: ${PORT}`);
   });
