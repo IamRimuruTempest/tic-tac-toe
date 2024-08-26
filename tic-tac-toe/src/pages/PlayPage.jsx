@@ -10,7 +10,8 @@ import GameOver from "../components/GameOver";
 import Name from "../components/Name";
 import ModalLayout from "../layout/ModalLayout";
 import PlayerStatus from "../components/PlayerStatus";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { api } from "../../config";
 
 export default function PlayPage() {
   const [params] = useSearchParams();
@@ -104,7 +105,7 @@ export default function PlayPage() {
     if (!isContinue) {
       console.log("Add new");
       axios
-        .post("https://tic-tac-toe-api-five.vercel.app/api/add-game", data)
+        .post(`${api}/api/add-game`, data)
         .then(() => {
           setTimeout(() => {
             navigate("/");
@@ -114,7 +115,7 @@ export default function PlayPage() {
     } else {
       console.log("Update");
       axios
-        .post("https://tic-tac-toe-api-five.vercel.app/api/update-game", {
+        .post(`${api}/api/update-game`, {
           ...data,
           gameid,
         })
@@ -158,7 +159,7 @@ export default function PlayPage() {
       // console.log("Hello, World!");
 
       axios
-        .get("https://tic-tac-toe-api-five.vercel.app/api/has-continue")
+        .get(`${api}/api/has-continue`)
         .then((res) => {
           console.log(res.data.data);
           const [ongoing] = res.data.data;
@@ -173,6 +174,25 @@ export default function PlayPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (winner) {
+      console.log("wiineer", winner);
+      if (!current) {
+        setPlayerOne((prev) => {
+          const newPlayerOne = { ...prev, win: prev.win + 1 };
+          setPlayerTwo((prev2) => ({ ...prev2, loss: prev2.loss ++ }));
+          return newPlayerOne;
+        });
+      } else {
+        setPlayerTwo((prev) => {
+          const newPlayerTwo = { ...prev, win: prev.win + 1 };
+          setPlayerOne((prev2) => ({ ...prev2, loss: prev2.loss ++ }));
+          return newPlayerTwo;
+        });
+      }
+    }
+  }, [winner]);
+
   const handleClick = (index) => {
     if (tiles[index] || winner) return;
 
@@ -183,19 +203,6 @@ export default function PlayPage() {
       const win = calculateWinner(newTiles);
       if (win) {
         setWinner(win);
-        if (current) {
-          setPlayerOne((prev) => {
-            const newPlayerOne = { ...prev, win: prev.win++ };
-            setPlayerTwo((prev) => ({ ...prev, loss: prev.loss++ }));
-            return newPlayerOne;
-          });
-        } else {
-          setPlayerTwo((prev) => {
-            const newPlayerTwo = { ...prev, win: prev.win++ };
-            setPlayerOne((prev) => ({ ...prev, loss: prev.loss++ }));
-            return newPlayerTwo;
-          });
-        }
       } else if (checkForDraw(newTiles)) {
         setDraw(true);
         setPlayerOne((prev) => ({ ...prev, draw: prev.draw++ }));

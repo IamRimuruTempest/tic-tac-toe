@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { PORT, ATLAS_URI } from "./config.js";
 import { Game } from "./models/gameModel.js";
+import { client } from "./config.js";
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://tic-tac-toe-game-puce-two.vercel.app",
+    origin: client,
     optionsSuccessStatus: 200,
   })
 );

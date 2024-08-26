@@ -9,7 +9,7 @@ export default function HistoryPage() {
 
   useEffect(() => {
     axios
-      .get("https://tic-tac-toe-api-five.vercel.app/api/histories")
+      .get(`${api}/api/histories`)
       .then((res) => {
         setHistories(res.data.data);
       })

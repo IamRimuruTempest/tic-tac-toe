@@ -3,12 +3,13 @@ import tictactoeLogo from "../assets/images/tictactoe-logo.png";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { api } from "../../config";
 
 export default function MenuPage() {
   const [ongoing, setOngoing] = useState();
   useEffect(() => {
     axios
-      .get("https://tic-tac-toe-api-five.vercel.app/api/has-continue")
+      .get(`${api}/api/has-continue`)
       .then((res) => {
         console.log(res.data.data);
         const isOngoing = res.data.data;
