@@ -56,6 +56,7 @@ export default function PlayPage() {
     [2, 4, 6],
   ];
 
+  // Calculate the winner
   const calculateWinner = (tiles) => {
     for (let i = 0; i < WINNING_PATTERNS.length; i++) {
       const [a, b, c] = WINNING_PATTERNS[i];
@@ -66,10 +67,12 @@ export default function PlayPage() {
     return null;
   };
 
+  // Check if draw.
   const checkForDraw = (tiles) => {
     return !tiles.includes("");
   };
 
+  // Reset the game after a round.
   const resetGame = () => {
     setTiles(Array(9).fill(""));
     setWinner(null);
@@ -79,6 +82,7 @@ export default function PlayPage() {
     setDraw(false);
   };
 
+  // Gameover - Save the data to database then navigate to Menu page.
   const gameOver = () => {
     // const navigate = useNavigate();
     resetGame();
@@ -98,12 +102,9 @@ export default function PlayPage() {
 
     setSaving(true);
 
-    // console.log(data, "test");
-
     // navigate("/");
 
     if (!isContinue) {
-      console.log("Add new");
       axios
         .post(`${api}/api/add-game`, data)
         .then(() => {
@@ -142,6 +143,7 @@ export default function PlayPage() {
     }, 5000);
   };
 
+  // Insert he name of the players.
   const insertName = (name) => {
     // console.log(player, "test");
 
@@ -154,14 +156,13 @@ export default function PlayPage() {
     }
   };
 
+  // Check if the user has ongoing game then populate the players previous game.
   useEffect(() => {
     if (isContinue) {
-      // console.log("Hello, World!");
-
       axios
         .get(`${api}/api/has-continue`)
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           const [ongoing] = res.data.data;
           setRounds(ongoing.rounds + 1);
           setPlayerOne(ongoing.playerOne);
@@ -174,9 +175,9 @@ export default function PlayPage() {
     }
   }, []);
 
+  // Check the current winner and update the winners win and losers loss.
   useEffect(() => {
     if (winner) {
-      console.log("wiineer", winner, current);
       if (!current) {
         setPlayerOne((prev) => ({ ...prev, win: prev.win + 1 }));
         setPlayerTwo((prev2) => ({ ...prev2, loss: prev2.loss + 1 }));
@@ -187,6 +188,15 @@ export default function PlayPage() {
     }
   }, [winner]);
 
+  useEffect(() => {
+    if (checkForDraw(tiles) && !winner) {
+      setPlayerOne((prev) => ({ ...prev, draw: prev.draw + 1 }));
+      setPlayerTwo((prev) => ({ ...prev, draw: prev.draw + 1 }));
+      setDraw(true);
+    }
+  }, [tiles, winner]);
+
+  // Handling the tile players. Setting the player moves with x and o.
   const handleClick = (index) => {
     if (tiles[index] || winner) return;
 
@@ -194,25 +204,28 @@ export default function PlayPage() {
       const newTiles = [...prev];
       newTiles[index] = current ? "x" : "o";
 
+      // Check for a winner or a draw
       const win = calculateWinner(newTiles);
       if (win) {
         setWinner(win);
-      } else if (checkForDraw(newTiles)) {
-        setDraw(true);
-        setPlayerOne((prev) => ({ ...prev, draw: prev.draw++ }));
-        setPlayerTwo((prev) => ({ ...prev, draw: prev.draw++ }));
       }
+
+      // else if (checkForDraw(newTiles)) {
+      //   setPlayerOne((prev) => ({ ...prev, draw: prev.draw + 1 }));
+      //   setPlayerTwo((prev) => ({ ...prev, draw: prev.draw + 1 }));
+      //   setDraw(true);
+      // }
 
       return newTiles;
     });
-
+    // Switch players
     setCurrent((prev) => !prev);
-    // setCount((prevCount) => prevCount + 1);
   };
 
   return (
     <MainLayout>
       <div className="w-full flex justify-center">
+        {/* Player 1 Status (name, wins, losses and draws) */}
         <PlayerStatus
           player={playerOne}
           imgsrc={mushroomGreen}
@@ -229,27 +242,30 @@ export default function PlayPage() {
                 key={index}
                 id={index}
                 tile={tile}
-                current={current}
                 onClick={() => handleClick(index)}
               />
             ))}
           </div>
         </div>
 
+        {/* Player 2 Status (name, wins, losses and draws) */}
         <PlayerStatus
           player={playerTwo}
           imgsrc={mushroomRed}
           color="text-red-600"
         />
 
+        {/* Show a modal when the player is equal to 1 and not a ongoing game */}
         {player === 1 && !isContinue && (
           <Name insertName={insertName} player="Player One" />
         )}
 
+        {/* Show a modal after name has been set for player 1 */}
         {player === 2 && !playerTwo.name && (
           <Name insertName={insertName} player="Player Two" />
         )}
 
+        {/* Show a modal if there's a winner */}
         {winner && (
           <Winner
             current={current}
@@ -260,6 +276,7 @@ export default function PlayPage() {
           />
         )}
 
+        {/* Show a modal if the round is draw */}
         {draw && (
           <Winner
             current={current}
@@ -279,6 +296,7 @@ export default function PlayPage() {
           />
         )} */}
 
+        {/* Show a modal after the game ended */}
         {saving && (
           <ModalLayout background="gray-800" opacity="75">
             <div className="w-1/2">

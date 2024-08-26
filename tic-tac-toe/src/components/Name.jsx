@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import ModalLayout from "../layout/ModalLayout";
 import Button from "../components/Button";
 import Input from "./Input";
@@ -35,7 +36,12 @@ export default function Name({ insertName, player }) {
               placeholder="Enter your name..."
             />
 
-            <Button name="Save" type="primary" handleClick={handleClick} />
+            <div className="flex">
+              <Button name="Save" type="primary" handleClick={handleClick} />
+              <Link to="/" className="nes-btn is-warning">
+                Menu
+              </Link>
+            </div>
           </div>
         </div>
       </div>

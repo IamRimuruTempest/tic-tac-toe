@@ -26,16 +26,6 @@ export default function Winner({ current, winner, resetGame, gameOver, draw }) {
 
       <div className=" px-4 py-3 gap-4 sm:flex  sm:px-6">
         <Button name="Continue" type="primary" handleClick={resetGame} />
-        {/* <button
-          onClick={resetGame}
-          type="button"
-          className="nes-btn is-primary"
-        >
-          Continue
-        </button> */}
-        {/* <button type="button" onClick={gameOver} className="nes-btn is-warning">
-          Game Over
-        </button> */}
 
         <Button name="Game Over" type="warning" handleClick={gameOver} />
       </div>

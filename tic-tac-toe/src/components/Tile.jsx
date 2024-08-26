@@ -1,7 +1,7 @@
 import mushroomGreen from "../assets/images/mushroom-green.png";
 import mushroomRed from "../assets/images/mushroom-red.png";
 
-export default function Tile({ id, tile, current, setTiles, onClick }) {
+export default function Tile({ id, tile, onClick }) {
   let icon = null;
 
   if (tile === "x") {
